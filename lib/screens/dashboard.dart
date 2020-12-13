@@ -7,24 +7,33 @@ class Dashboard extends StatelessWidget {
       appBar: AppBar(
         title: Text('Dashboard'),
       ),
-      body: Wrap(
-        children: [
-          _FeatureItem("Habit", Icons.loop, onClick: null),
-          _FeatureItem("Tasks", Icons.check_box_outline_blank,
-              onClick: null),
-          _FeatureItem("Tasks", Icons.check_box_outline_blank,
-              onClick: null),
-          _FeatureItem("Tasks", Icons.check_box_outline_blank,
-              onClick: null),
-          _FeatureItem("Tasks", Icons.check_box_outline_blank,
-              onClick: null),
-          _FeatureItem("Tasks", Icons.check_box_outline_blank,
-              onClick: null),
-          _FeatureItem("Tasks", Icons.check_box_outline_blank,
-              onClick: null),
-          _FeatureItem("Tasks", Icons.check_box_outline_blank,
-              onClick: null),
-        ],
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Wrap(
+            children: [
+              Container(
+                height: 120,
+                width: MediaQuery.of(context).size.width / 2,
+                child: _FeatureItem("Habit", Icons.loop, onClick: null),
+              ),
+              Container(
+                height: 120,
+                width: MediaQuery.of(context).size.width / 2,
+                child: _FeatureItem("Habit", Icons.loop, onClick: null),
+              ),
+              Container(
+                height: 120,
+                width: MediaQuery.of(context).size.width / 2,
+                child: _FeatureItem("Habit", Icons.loop, onClick: null),
+              ),
+              Container(
+                height: 120,
+                width: MediaQuery.of(context).size.width / 2,
+                child: _FeatureItem("Habit", Icons.loop, onClick: null),
+              )
+            ],
+          );
+        },
       ),
     );
   }
