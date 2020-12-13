@@ -11,26 +11,9 @@ class Dashboard extends StatelessWidget {
         builder: (BuildContext context, BoxConstraints constraints) {
           return Wrap(
             children: [
-              Container(
-                height: 120,
-                width: MediaQuery.of(context).size.width / 2,
-                child: _FeatureItem("Habit", Icons.loop, onClick: null),
-              ),
-              Container(
-                height: 120,
-                width: MediaQuery.of(context).size.width / 2,
-                child: _FeatureItem("Habit", Icons.loop, onClick: null),
-              ),
-              Container(
-                height: 120,
-                width: MediaQuery.of(context).size.width / 2,
-                child: _FeatureItem("Habit", Icons.loop, onClick: null),
-              ),
-              Container(
-                height: 120,
-                width: MediaQuery.of(context).size.width / 2,
-                child: _FeatureItem("Habit", Icons.loop, onClick: null),
-              )
+              _FeatureItem("Habit", Icons.loop, onClick: null),
+              _FeatureItem("Tasks", Icons.check_box_outline_blank, onClick: null),
+              _FeatureItem("Projects", Icons.list, onClick: () => _showProjectsList(context)),
             ],
           );
         },
@@ -40,6 +23,15 @@ class Dashboard extends StatelessWidget {
 
   void _showHabits(BuildContext context) {
     print("load habits page");
+  }
+
+  void _showProjectsList(BuildContext context) {
+    print("clicked on projects list");
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => null,
+      ),
+    );
   }
 }
 
@@ -52,30 +44,39 @@ class _FeatureItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Material(
-        color: Theme.of(context).primaryColor,
-        child: Container(
-          padding: EdgeInsets.all(8.0),
-          height: 120,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Icon(
-                icon,
-                color: Colors.white,
-                size: 24.0,
-              ),
-              Text(
-                name,
-                style: TextStyle(
+    return Container(
+      height: 120,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width / 2,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          color: Theme
+              .of(context)
+              .primaryColor,
+          child: Container(
+            padding: EdgeInsets.all(8.0),
+            height: 120,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Icon(
+                  icon,
                   color: Colors.white,
-                  fontSize: 16.0,
+                  size: 24.0,
                 ),
-              )
-            ],
+                Text(
+                  name,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
