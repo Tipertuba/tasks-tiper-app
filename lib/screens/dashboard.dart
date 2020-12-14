@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiperapp/screens/project_list.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -29,7 +30,7 @@ class Dashboard extends StatelessWidget {
     debugPrint("clicked on projects list");
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => null,
+        builder: (context) => ProjectList(),
       ),
     );
   }
