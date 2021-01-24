@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tiperapp/models/project.dart';
 import 'package:tiperapp/screens/project_form.dart';
+import 'package:uuid/uuid.dart';
 
 class ProjectList extends StatelessWidget {
   @override
@@ -18,7 +20,7 @@ class ProjectList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProjectForm()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProjectFormContainer(Project(0, ""))));
         },
         child: Icon(Icons.add),
       ),

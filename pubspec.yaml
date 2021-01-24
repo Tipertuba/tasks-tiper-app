@@ -1,5 +1,5 @@
 name: tiperapp
-description: A new Flutter project.
+description: A new Tiperapp project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -23,6 +23,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http:
+  http_interceptor:
+  uuid:
+  flutter_bloc: ^6.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
