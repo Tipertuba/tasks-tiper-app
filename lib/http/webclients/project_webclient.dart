@@ -4,9 +4,11 @@ import 'package:http/http.dart';
 import 'package:tiperapp/http/webclient.dart';
 import 'package:tiperapp/models/project.dart';
 
+const projectResource = "/project";
+
 class ProjectWebClient {
   Future<List<Project>> findAll() async {
-    final Response response = await client.get(baseUrl);
+    final Response response = await client.get(baseUrl + projectResource);
     final List<dynamic> decodedJson = jsonDecode(response.body);
     return decodedJson
         .map((dynamic json) => Project.fromJson(json))
@@ -16,9 +18,9 @@ class ProjectWebClient {
   Future<Project> save(Project project) async {
     final String projectJson = jsonEncode(project.toJson());
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
 
-    final Response response = await client.post(baseUrl + "/project",
+    final Response response = await client.post(baseUrl + projectResource,
         headers: {
           'Content-Type': 'application/json'
         },
