@@ -5,6 +5,7 @@ import 'package:tiperapp/components/progress.dart';
 import 'package:tiperapp/http/webclients/project_webclient.dart';
 import 'package:tiperapp/models/project.dart';
 import 'package:tiperapp/screens/project_form.dart';
+import 'package:tiperapp/screens/task_list.dart';
 
 @immutable
 abstract class ProjectsListState {
@@ -89,7 +90,7 @@ class ProjectList extends StatelessWidget {
                   return _ProjectItem(
                     project,
                     onClick: () {
-                      push(context, ProjectFormContainer(project));
+                      push(context, TaskListContainer(project));
                     },
                   );
                 });
