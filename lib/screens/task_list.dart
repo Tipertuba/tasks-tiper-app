@@ -5,6 +5,7 @@ import 'package:tiperapp/components/progress.dart';
 import 'package:tiperapp/http/webclients/task_webclient.dart';
 import 'package:tiperapp/models/project.dart';
 import 'package:tiperapp/models/task.dart';
+import 'package:tiperapp/screens/task_form.dart';
 
 @immutable
 abstract class TaskListState {
@@ -57,7 +58,6 @@ class TaskListCubit extends Cubit<TaskListState> {
 }
 
 class TaskListContainer extends BlocContainer {
-
   final Project _project;
 
   TaskListContainer(this._project);
@@ -70,12 +70,16 @@ class TaskListContainer extends BlocContainer {
         cubit.reload();
         return cubit;
       },
-      child: TaskList(),
+      child: TaskList(this._project),
     );
   }
 }
 
 class TaskList extends StatelessWidget {
+  final Project _project;
+
+  TaskList(this._project);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,12 +110,22 @@ class TaskList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          await Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  TaskFormContainer(this._project, Task(0, ""))));
+          update(context);
         },
         child: Icon(Icons.add),
       ),
     );
   }
+
+  void update(BuildContext context) {
+    context.read<TaskListCubit>().reload();
+  }
 }
+
+
 
 class _TaskItem extends StatelessWidget {
   final Task task;
