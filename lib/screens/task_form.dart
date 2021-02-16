@@ -130,7 +130,7 @@ class _BasicForm extends StatelessWidget {
                     child: Text('Create'),
                     onPressed: () {
                       final String name = _taskNameController.text;
-                      final Task task = Task(0, name);
+                      final Task task = Task(0, name, false);
                       BlocProvider.of<TaskFormCubit>(context)
                           .save(_project, task, context);
                     },

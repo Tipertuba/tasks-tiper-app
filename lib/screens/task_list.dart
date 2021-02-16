@@ -31,6 +31,13 @@ class LoadedTaskListState extends TaskListState {
 }
 
 @immutable
+class LoadedTaskState extends TaskListState {
+  final Task _task;
+
+  const LoadedTaskState(this._task);
+}
+
+@immutable
 class FatalErrorTaskListState extends TaskListState {
   final String _message;
 
@@ -47,13 +54,20 @@ class TaskListCubit extends Cubit<TaskListState> {
     _fetch(this._project);
   }
 
-  _fetch(Project project) async {
-    await TaskWebClient()
-        .findTasks(project)
-        .then((value) => emit(LoadedTaskListState(project, value)))
-        .catchError((e) {
+  completeTask(Task task) async {
+    await TaskWebClient().completeTask(task).then((value) => emit(LoadedTaskState(value))).catchError((e) {
       emit(FatalErrorTaskListState(e.message));
     });
+  }
+
+  _fetch(Project project) async {
+    await TaskWebClient().findTasks(project).then((value) => emit(LoadedTaskListState(project, value))).catchError((e) {
+      emit(FatalErrorTaskListState(e.message));
+    });
+  }
+
+  _updateTaskOfProject(Project project, Task task) {
+    // project.task
   }
 }
 
@@ -102,17 +116,19 @@ class TaskList extends StatelessWidget {
                     onClick: () {
                       push(context, TaskListContainer(state._project));
                     },
+                    completeTaskFunction: () {
+                      completeTask(context, task);
+                    },
                   );
                 });
           }
+          if (state is LoadedTaskState) {}
           return const Text("Unknown Error");
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  TaskFormContainer(this._project, Task(0, ""))));
+          await Navigator.of(context).push(MaterialPageRoute(builder: (context) => TaskFormContainer(this._project, Task(0, "", false))));
           update(context);
         },
         child: Icon(Icons.add),
@@ -123,23 +139,32 @@ class TaskList extends StatelessWidget {
   void update(BuildContext context) {
     context.read<TaskListCubit>().reload();
   }
+
+  void completeTask(BuildContext context, Task task) {
+    context.read<TaskListCubit>().completeTask(task);
+  }
 }
-
-
 
 class _TaskItem extends StatelessWidget {
   final Task task;
   final Function onClick;
+  final Function completeTaskFunction;
 
-  _TaskItem(this.task, {@required this.onClick});
+  _TaskItem(this.task, {@required this.onClick, @required this.completeTaskFunction});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
         onTap: () => onClick(),
-        leading: FlutterLogo(),
+        leading: IconButton(
+          icon: Icon(task.completed ? Icons.check_box_outlined : Icons.check_box_outline_blank_rounded),
+          onPressed: () {
+            completeTaskFunction();
+          },
+        ),
         title: Text(task.name),
+        subtitle: Text("Shroubles"),
         trailing: Icon(Icons.more_vert),
       ),
     );

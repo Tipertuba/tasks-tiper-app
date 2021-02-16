@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiperapp/components/container.dart';
+import 'package:tiperapp/constants/tiper_app_routes.dart';
 import 'package:tiperapp/screens/project_list.dart';
 
 class Dashboard extends StatelessWidget {
@@ -23,13 +24,9 @@ class Dashboard extends StatelessWidget {
     );
   }
 
-  void _showHabits(BuildContext context) {
-    print("load habits page");
-  }
-
   void _showProjectsList(BuildContext blocContext) {
     debugPrint("clicked on projects list");
-    push(blocContext, ProjectsListContainer());
+    Navigator.pushNamed(blocContext, TiperAppRoutes.projects);
   }
 }
 
