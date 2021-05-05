@@ -4,13 +4,20 @@ import 'package:tiperapp/blocs/projects/projects_bloc.dart';
 import 'package:tiperapp/blocs/projects/projects_event.dart';
 import 'package:tiperapp/blocs/simple_bloc_observer.dart';
 import 'package:tiperapp/components/theme.dart';
+import 'package:tiperapp/constants/keys.dart';
 import 'package:tiperapp/constants/tiper_app_routes.dart';
 import 'package:tiperapp/http/webclients/project_webclient.dart';
 import 'package:tiperapp/screens/dashboard.dart';
+import 'package:tiperapp/screens/project_form.dart';
 import 'package:tiperapp/screens/project_list.dart';
 
 void main() {
-  runApp(TiperApp());
+  runApp(BlocProvider(
+    create: (context) {
+      return ProjectsBloc(projectWebClient: ProjectWebClient())..add(ProjectsLoaded());
+    },
+    child: TiperApp(),
+  ));
 }
 
 class TiperApp extends StatelessWidget {
@@ -23,12 +30,11 @@ class TiperApp extends StatelessWidget {
       TiperAppRoutes.projects: (context) {
         return BlocProvider<ProjectsBloc>(
           create: (context) {
-            return ProjectsBloc(projectWebClient: ProjectWebClient())
-              ..add(ProjectsLoaded());
+            return ProjectsBloc(projectWebClient: ProjectWebClient())..add(ProjectsLoaded());
           },
           child: ProjectList(),
         );
-      }
+      },
     });
   }
 }

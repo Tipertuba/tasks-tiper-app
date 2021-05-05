@@ -20,3 +20,27 @@ class ProjectAdded extends ProjectsEvent {
   @override
   String toString() => 'ProjectAdded { project: $project }';
 }
+
+class ProjectUpdated extends ProjectsEvent {
+  final Project project;
+
+  const ProjectUpdated(this.project);
+
+  @override
+  List<Object> get props => [project];
+
+  @override
+  String toString() => 'ProjectAdded { project: $project }';
+}
+
+class ProjectDeleted extends ProjectsEvent {
+  final Project project;
+
+  const ProjectDeleted(this.project);
+
+  @override
+  List<Object> get props => [project];
+
+  @override
+  String toString() => 'ProjectDeleted { project: $project }';
+}
