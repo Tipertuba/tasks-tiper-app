@@ -33,8 +33,10 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
   Stream<ProjectsState> _mapProjectsAddedToState(ProjectAdded event) async* {
     if(state is ProjectsLoadSuccess) {
       try {
+        var projectsLoaded = (state as ProjectsLoadSuccess).projects;
+        yield ProjectsLoadInProgress();
         var project = await this.projectWebClient.save(event.project);
-        final List<Project> updatedProjects = List.from((state as ProjectsLoadSuccess).projects)..add(project);
+        final List<Project> updatedProjects = List.from(projectsLoaded)..add(project);
         yield ProjectsLoadSuccess(updatedProjects);
       } catch(_) {
         yield ProjectsLoadFailure();

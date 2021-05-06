@@ -17,7 +17,7 @@ class ProjectWebClient {
   Future<Project> save(Project project) async {
     final String projectJson = jsonEncode(project.toJson());
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(milliseconds: 300));
 
     final Response response = await client.post(baseUrl + projectResource,
         headers: {'Content-Type': 'application/json'}, body: projectJson);
@@ -32,7 +32,7 @@ class ProjectWebClient {
   Future<Project> addTaskToProject(Project project, Task task) async {
     final String taskJson = jsonEncode(task.toJson());
 
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 300));
 
     final Response response = await client.post(
         '$baseUrl$projectResource/${project.id}/task',
